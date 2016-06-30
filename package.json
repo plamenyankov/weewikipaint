@@ -1,0 +1,24 @@
+{
+  "name": "weewikipaint",
+  "version": "1.0.0",
+  "description": "Weewikipaint",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/plamenyankov/weewikipaint.git"
+  },
+  "author": "Plamen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/plamenyankov/weewikipaint/issues"
+  },
+  "homepage": "https://github.com/plamenyankov/weewikipaint#readme",
+  "devDependencies": {
+    "jake": "^8.0.12",
+    "jshint": "^2.9.2",
+    "simplebuild-jshint": "^1.3.0"
+  }
+}
