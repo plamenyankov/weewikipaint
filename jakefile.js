@@ -7,7 +7,10 @@
    task("default",["lint"],function(){
       console.log("jake Hello");
    });
-
+   desc("Integration");
+   task("integrate",["default"], function(){
+   console.log("Integrate");
+   });
    desc("Linting");
    task("lint", function () {
       process.stdout.write("Javascript linting ");
