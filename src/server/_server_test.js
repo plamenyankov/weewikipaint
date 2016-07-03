@@ -1,7 +1,9 @@
-(function(){
+(function () {
     "use strict";
-    exports.testNothing = function(test){
-        test.ok(true,"Hello");
+    var server = require("./server.js");
+
+    exports.testNothing = function (test) {
+        test.equals(4, server.number(), "numbers");
         test.done();
     }
 }());

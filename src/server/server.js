@@ -1,3 +1,8 @@
-/**
- * Created by vipbs on 02/07/2016.
- */
+(function(){
+    "use strict";
+
+    exports.number = function(){
+
+        return 4;
+    }
+}());
