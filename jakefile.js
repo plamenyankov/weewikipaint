@@ -7,6 +7,12 @@
    task("default",["lint"],function(){
       console.log("jake Hello");
    });
+
+   desc("Build and test");
+   task("test",[], function(){
+      var reporter = require("nodeunit").reporters.minimal;
+      reporter.run(["src/server/_server_test.js"]);
+   });
    desc("Integration");
    task("integrate",["default"], function(){
    console.log("Integrate");
