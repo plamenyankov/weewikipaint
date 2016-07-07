@@ -4,15 +4,18 @@
    "use strict";
    var jshint = require('simplebuild-jshint');
 
-   task("default",["lint"],function(){
+   task("default",["lint","test"],function(){
       console.log("jake Hello");
    });
 
    desc("Build and test");
    task("test",[], function(){
-      var reporter = require("nodeunit").reporters.minimal;
-      reporter.run(["src/server/_server_test.js"]);
-   });
+      var reporter = require("nodeunit").reporters.default;
+      reporter.run(["src/server/_server_test.js"], null, function(failures){
+         if(failures) fail("Tests fails");
+         complete();
+      });
+   }, {async: true});
    desc("Integration");
    task("integrate",["default"], function(){
    console.log("Integrate");
