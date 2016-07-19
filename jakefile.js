@@ -16,7 +16,10 @@
     desc("Build and test");
     task("test", [TEMP_TESTFILE_DIR], function () {
         var reporter = require("nodeunit").reporters.default;
-        reporter.run(["src/server/_server_test.js"], null, function (failures) {
+        var jsFiles = new jake.FileList();
+        jsFiles.include("**/_*_test.js");
+        jsFiles.exclude("node_modules");
+        reporter.run(jsFiles.toArray(), null, function (failures) {
             if (failures) fail("Tests fails");
             complete();
         });
