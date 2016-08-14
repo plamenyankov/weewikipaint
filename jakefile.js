@@ -1,4 +1,4 @@
-/* globals directory:false, desc:false, task:false, fail:false, complete:false, jake:false  */
+/* globals directory:false, desc:false, task:false, fail:false, complete:false, jake:false, chai:false  */
 
 (function () {
     "use strict";
@@ -13,12 +13,22 @@
     task("clean", [], function () {
         jake.rmRf("generated");
     });
-    desc("Build and test");
-    task("test", [TEMP_TESTFILE_DIR], function () {
+    desc("Test Everything");
+    task("test", ["testServer", "testClient"]);
+    desc("Test Client");
+    task("testClient", [], function () {
+
+        //sh("karma.cmd start",function(){ console.log("Karma started");});
+        sh("karma.cmd run",complete);
+    }, {async: true});
+
+    desc("Build and test server");
+    task("testServer", [TEMP_TESTFILE_DIR], function () {
         var reporter = require("nodeunit").reporters.default;
         var jsFiles = new jake.FileList();
         jsFiles.include("**/_*_test.js");
         jsFiles.exclude("node_modules");
+        jsFiles.exclude("src/client/**");
         reporter.run(jsFiles.toArray(), null, function (failures) {
             if (failures) fail("Tests fails");
             complete();
@@ -43,10 +53,15 @@
     task("node", function () {
         var nodeVersion = "v4.1.2\n";
         var cmds = 'node --version';
+        sh(cmds,complete);
+
+    }, {async: true});
+    // Linting Options Functions
+    function sh(cmds, callback) {
         console.log("> " + cmds);
         var stdout = "";
-        var process = jake.createExec(cmds, {printStdout: true, printStderr: true, stdout: true });
-        process.addListener("stdout", function (msg,chunk) {
+        var process = jake.createExec(cmds, {printStdout: true, printStderr: true, stdout: true});
+        process.addListener("stdout", function (msg, chunk) {
             stdout += chunk;
         });
         process.addListener("cmdStart", function () {
@@ -57,12 +72,10 @@
         process.addListener("cmdEnd", function () {
             //if (stdout != nodeVersion) fail("Incorrect Node version, expected " + nodeVersion);
             console.log("Stdout: " + stdout);
-            complete();
+            callback();
         });
         process.run();
-
-    }, {async: true});
-    // Linting Options Functions
+    }
 
     function lintOpt() {
         return {
